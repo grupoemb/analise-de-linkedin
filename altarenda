@@ -110,7 +110,7 @@
     }
 
     button:hover {
-      background-color: #0036cc;
+      background-color: #f8f8f5;
     }
 
     #status {
@@ -161,7 +161,7 @@
       formData.append("file", pdf);
 
       try {
-        const response = await fetch("https://grupoemb.app.n8n.cloud/webhook/d8dcc294-b47d-450b-9029-b76b3c49d6ad", {
+        const response = await fetch("https://grupoemb.app.n8n.cloud/workflow/bqo7zsWwNkcmfI4V", {
           method: "POST",
           body: formData,
         });
