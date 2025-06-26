@@ -151,16 +151,32 @@
     const form = document.getElementById("linkedinForm");
     const status = document.getElementById("status");
 
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const email = document.getElementById("email").value;
-      const pdf = document.getElementById("pdf").files[0];
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const email = document.getElementById("email").value;
+  const pdf = document.getElementById("pdf").files[0];
 
-      const formData = new FormData();
-      formData.append("email", email);
-      formData.append("file", pdf);
+  // Validações básicas
+  if (!email || !pdf) {
+    status.innerText = "❌ Por favor, preencha todos os campos.";
+    return;
+  }
 
-      try {
+  if (pdf.type !== 'application/pdf') {
+    status.innerText = "❌ Por favor, selecione apenas arquivos PDF.";
+    return;
+  }
+
+  // Adicionar timestamp único para evitar conflitos
+  const formData = new FormData();
+  formData.append("email", email);
+  formData.append("file", pdf);
+  formData.append("timestamp", Date.now());
+  formData.append("session_id", Math.random().toString(36).substr(2, 9));
+
+  status.innerText = "⏳ Enviando arquivo...";
+
+  try {
         const response = await fetch("https://grupoemb.app.n8n.cloud/webhook-test/6246e0fa-700e-4f22-9ad9-45044dbfaf7c", {
           method: "POST",
           body: formData,
